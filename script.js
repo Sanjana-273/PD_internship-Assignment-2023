@@ -36,5 +36,3 @@ async function getData() {
 }
 getData()
 
-
-//working fine
