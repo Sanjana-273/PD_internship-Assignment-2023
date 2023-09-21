@@ -34,10 +34,10 @@ const getAccessToken = async () => {
 };
 
 
-async function fetchArtistData(artistId, accessToken) {
+async function fetchArtistData(artistId) {
     const artistUrl = `https://api.spotify.com/v1/artists/${artistId}`;
     const headers = {
-        'Authorization': `Bearer ${accessToken}`
+        'Authorization': `Bearer ${getAccessToken()}`
     };
 
     try {
@@ -78,14 +78,13 @@ const renderArtists = (artists) => {
 const main = async () => {
     try {
         const accessToken = await getAccessToken();
-        const artistDataPromises = artistIds.map((artistId) => fetchArtistData(artistId, accessToken));
+        const artistDataPromises = artistIds.map((artistId) => fetchArtistData(artistId));
         const topArtists = await Promise.all(artistDataPromises);
         renderArtists(topArtists);
         console.log(accessToken);
     } catch (error) {
         console.error('An error occurred:', error);
     }
-    console.log('Main function called.');
 };
 
 main();
