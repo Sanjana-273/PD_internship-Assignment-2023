@@ -34,10 +34,10 @@ const getAccessToken = async () => {
 };
 
 
-async function fetchArtistData(artistId) {
+async function fetchArtistData(artistId,accesstoken) {
     const artistUrl = `https://api.spotify.com/v1/artists/${artistId}`;
     const headers = {
-        'Authorization': `Bearer ${getAccessToken()}`
+        'Authorization': `Bearer ${accesstoken}`
     };
 
     try {
@@ -78,7 +78,7 @@ const renderArtists = (artists) => {
 const main = async () => {
     try {
         const accessToken = await getAccessToken();
-        const artistDataPromises = artistIds.map((artistId) => fetchArtistData(artistId));
+        const artistDataPromises = artistIds.map((artistId) => fetchArtistData(artistId,accessToken));
         const topArtists = await Promise.all(artistDataPromises);
         renderArtists(topArtists);
         console.log(accessToken);
